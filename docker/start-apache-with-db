@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+: "${DB_HOST:=db}"
+: "${DB_NAME:=my_site}"
+: "${DB_USER:=root}"
+: "${DB_PASSWORD:?DB_PASSWORD is required}"
+
+echo "Waiting for MySQL database at ${DB_HOST}..."
+until php /usr/local/bin/init-db.php --check; do
+  sleep 2
+done
+
+php /usr/local/bin/init-db.php --migrate
+
+exec apache2-foreground

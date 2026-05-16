@@ -1,0 +1,13 @@
+FROM php:8.2-apache
+
+COPY docker/start-apache-with-db /usr/local/bin/start-apache-with-db
+COPY docker/init-db.php /usr/local/bin/init-db.php
+
+RUN docker-php-ext-install pdo_mysql \
+    && sed -i 's/\r$//' /usr/local/bin/start-apache-with-db /usr/local/bin/init-db.php \
+    && chmod +x /usr/local/bin/start-apache-with-db
+
+COPY . /var/www/html
+
+CMD ["start-apache-with-db"]
+

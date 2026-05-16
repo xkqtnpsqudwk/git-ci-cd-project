@@ -1,0 +1,4 @@
+* text=auto
+DockerFile text eol=lf
+.github/workflows/*.yml text eol=lf
+docker/* text eol=lf
